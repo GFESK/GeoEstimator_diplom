@@ -26,7 +26,7 @@ def get_location(image_file: str= ''):
     if ('gps_latitude' or 'gps_latitude_ref' or 'gps_longitude' or 'gps_longitude_ref') in image_members:
         latitude = palm_1_image.get('gps_latitude', default= None)
         longitude = palm_1_image.get('gps_longitude', default= None)
-        longitude_formatted = f'{int(longitude[0])}.{int(longitude[1])}{int(longitude[2]*10000)}'
-        latitude_formatted = f'{int(latitude[0])}.{int(latitude[1])}{int(latitude[2]*10000)}'
+        longitude_formatted = f'{int(longitude[0]) + int(longitude[1])/60 + int(longitude[2])/3600}'
+        latitude_formatted = f'{int(latitude[0]) + int(latitude[1])/60 + int(latitude[2])/3600}'
         return latitude_formatted, longitude_formatted
     return ('Location is not available')
