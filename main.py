@@ -10,14 +10,13 @@ def index():
     if request.method == 'POST':
         image_file = request.files['file']
         location = get_location(image_file.read())
-        origin_of_photo = detect_origin(image_file.read())
+        #origin_of_photo = detect_origin(image_file.read())
         if type(location) == tuple:
             latitude, longitude = location
             return render_template('index.html', message=message,
                                    latitude=latitude,
-                                   longitude=longitude,
-                                   origin_of_photo=origin_of_photo)
+                                   longitude=longitude)
         else:
             message = location
-            return render_template('index.html', message=message, origin_of_photo=origin_of_photo)
+            return render_template('index.html', message=message)
     return render_template('index.html')
