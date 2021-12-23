@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template
 from location import get_location
-from jpg_decoder import detect_origin
+#from jpg_decoder import detect_origin
 
 app = Flask(__name__)
 
