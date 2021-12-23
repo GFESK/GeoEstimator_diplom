@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template
 from location import get_location
-
+from jpg_decoder import detect_origin
 
 app = Flask(__name__)
 
@@ -9,11 +9,15 @@ def index():
     message = ''
     if request.method == 'POST':
         image_file = request.files['file']
-        answer = get_location(image_file.read())
-        if type(answer) == tuple:
-            latitude, longitude = answer
-            return render_template('index.html', message=message, latitude=latitude, longitude=longitude)
+        location = get_location(image_file.read())
+        origin_of_photo = detect_origin(image_file.read())
+        if type(location) == tuple:
+            latitude, longitude = location
+            return render_template('index.html', message=message,
+                                   latitude=latitude,
+                                   longitude=longitude,
+                                   origin_of_photo=origin_of_photo)
         else:
-            message = answer
-            return render_template('index.html', message=message)
+            message = location
+            return render_template('index.html', message=message, origin_of_photo=origin_of_photo)
     return render_template('index.html')
